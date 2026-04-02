@@ -1,10 +1,10 @@
 # Use PHP 8.2 Composer image
 FROM composer:2.5 AS build
 WORKDIR /app
-COPY composer.json ./
-# Update to regenerate lock file for PHP 8.2
-RUN composer update --no-dev --optimize-autoloader --no-interaction
-COPY . /app
+# Copy semua file dulu
+COPY . /app/
+# Skip artisan scripts saat composer
+RUN composer update --no-dev --optimize-autoloader --no-interaction --no-scripts
 
 # Use PHP 8.2 Apache
 FROM php:8.2-apache
