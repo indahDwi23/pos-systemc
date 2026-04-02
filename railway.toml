@@ -11,11 +11,9 @@ cmds = [
   "php artisan db:seed --force"
 ]
 
-[phases.start]
-cmds = ["php artisan serve --host=0.0.0.0 --port=$PORT"]
-
 [start]
-cmd = "php artisan serve --host=0.0.0.0 --port=$PORT"
+cmd = "php artisan serve --host=0.0.0.0 --port=${PORT}"
 
 [variables]
+PORT = "8080"
 PHP_VERSION = "8.2"
