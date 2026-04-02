@@ -28,8 +28,9 @@ RUN apt-get update && apt-get install -y \
     gd \
     && rm -rf /var/lib/apt/lists/*
 
-# Fix Apache MPM conflict
-RUN a2dismod mpm_event \
+# Fix Apache MPM - BEFORE any other Apache config
+RUN rm -f /etc/apache2/mods-enabled/mpm_event.load \
+    && rm -f /etc/apache2/mods-available/mpm_event.load \
     && a2enmod mpm_prefork \
     && a2enmod rewrite
 
