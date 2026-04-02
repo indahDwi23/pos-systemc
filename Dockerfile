@@ -28,8 +28,10 @@ RUN apt-get update && apt-get install -y \
     gd \
     && rm -rf /var/lib/apt/lists/*
 
-# Enable Apache mod_rewrite
-RUN a2enmod rewrite
+# Fix Apache MPM conflict
+RUN a2dismod mpm_event \
+    && a2enmod mpm_prefork \
+    && a2enmod rewrite
 
 # Copy from build stage
 COPY --from=build --chown=www-data:www-data /app /var/www/html
