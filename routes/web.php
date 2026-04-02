@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -46,6 +47,11 @@ Route::post('/user/edit/{user}', [UserController::class, 'updateProfile'])->midd
 Route::get('/menus/shows', [MenuController::class, 'show']);
 
 Route::get('/activityLog', [ActivityLogController::class, 'index']);
+
+Route::prefix('statistics')->name('statistics.')->group(function () {
+    Route::get('/', [StatisticsController::class, 'index'])->name('index');
+    Route::get('/profit', [StatisticsController::class, 'profit'])->name('profit');
+});
 
 Route::get('/invoice/{transaction}', function (Transaction $transaction) {
     return View('transaction.invoice', [

@@ -19,14 +19,13 @@ class MenuController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->level_id === 2 || $user->level_id === 3) {
+        if ($user->level_id === 2) {
             return redirect()->back();
         }
 
         return view('menu.index', [
             'foods' => $menu->where('category','food')->latest()->get(),
-            'drinks' => $menu->where('category', 'drink')->latest()->get(),
-            'dessert' => $menu->where('category', 'dessert')->latest()->get()
+            'drinks' => $menu->where('category', 'drink')->latest()->get()
         ]);
     }
 
@@ -39,7 +38,7 @@ class MenuController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->level_id === 2 || $user->level_id === 3) {
+        if ($user->level_id === 2) {
             return redirect()->back();
         }
 
@@ -66,7 +65,7 @@ class MenuController extends Controller
 
         $validateddata["modal"] = filter_var($request->modal, FILTER_SANITIZE_NUMBER_INT);
         $validateddata["price"] = filter_var($request->price, FILTER_SANITIZE_NUMBER_INT);
-        $validateddata["picture"] = $request->file('image')->store('menu');
+        $validateddata["picture"] = $request->file('image')->store('menu', 'public');
 
         Menu::create($validateddata);
 
@@ -103,7 +102,7 @@ class MenuController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->level_id === 2 || $user->level_id === 3) {
+        if ($user->level_id === 2) {
             return redirect()->back();
         }
         
@@ -135,8 +134,8 @@ class MenuController extends Controller
         $validateddata["price"] = filter_var($request->price, FILTER_SANITIZE_NUMBER_INT);
 
         if ($request->file('picture')) {
-            Storage::delete($menu->picture);
-            $validateddata['picture'] = $request->file('picture')->store('menu'); 
+            Storage::disk('public')->delete($menu->picture);
+            $validateddata['picture'] = $request->file('picture')->store('menu', 'public');
         }
         
         Menu::where('id', $menu->id)
@@ -159,7 +158,7 @@ class MenuController extends Controller
      */
     public function destroy(Menu $menu)
     {
-        Storage::delete($menu->picture);   
+        Storage::disk('public')->delete($menu->picture);
         $menu->destroy($menu->id);
         $activity = [
             'user_id' => Auth::id(),

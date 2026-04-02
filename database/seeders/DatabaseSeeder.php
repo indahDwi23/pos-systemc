@@ -8,6 +8,7 @@ use App\Models\Level;
 use App\Models\Menu;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
@@ -26,24 +27,21 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        level::create([
-            'level' => 'manager'
-        ]);
+        // Clean up - delete all existing levels and users first
+        User::query()->delete();
+        Level::query()->delete();
 
-        level::create([
-           'level' => 'cashier' 
-        ]);
+        // Create levels
+        Level::create(['level' => 'owner']);
+        Level::create(['level' => 'cashier']);
 
-        level::create([
-           'level' => 'admin' 
-        ]);
-
+        // Create users
         User::create([
             'level_id' => '1',
             'name' => 'Aldy Ramadhan',
-            'username' => 'manager',
+            'username' => 'owner',
             'password' => bcrypt('asd321'),
-            'email' => 'aldy89@gmail.com', 
+            'email' => 'aldy89@gmail.com',
             'picture' => 'avatars-'.mt_rand(1,8).'.png'
         ]);
 
@@ -52,22 +50,13 @@ class DatabaseSeeder extends Seeder
             'name' => 'Muhammad Galang',
             'username' => 'cashier',
             'password' => bcrypt('asd321'),
-            'email' => 'galang110@gmail.com', 
-            'picture' => 'avatars-'.mt_rand(1,8).'.png'
-        ]);
-
-        User::create([
-            'level_id' => '3',
-            'name' => 'Sophia',
-            'username' => 'admin',
-            'password' => bcrypt('asd321'),
-            'email' => 'sophia32@gmail.com',
+            'email' => 'galang110@gmail.com',
             'picture' => 'avatars-'.mt_rand(1,8).'.png'
         ]);
 
         $menuData = [
             [
-                'name' => 'Carne Guisada',
+                'name' => 'Ayam Penyet Lamongan',
                 'modal' => '68000',
                 'price' => '80000',
                 'description' => '<div><strong>Consisting of<br></strong>- rice with, <strong><br></strong>- beef cut into small pieces and cooked in a blend of spices.</div>',
@@ -140,32 +129,18 @@ class DatabaseSeeder extends Seeder
             ],
         ];
 
-        $imageUrls = [
-            'https://i.ibb.co/cydkjWp/03r-Iwzuawxd-Zc-Hc-J6skw-Mcec-Y5i-GUOj-MPUgq-I1f-W.png',
-            'https://i.ibb.co/p1bSnsZ/4dj3-FQt-Rpa-Ovt-VUXI2g8g-RHz-LRUe-Vv-VHnx7-Wif-El.png',
-            'https://i.ibb.co/X8WNZzq/NPh-Witdo-KL7fe8-R300-NVQVhr1t-P2-Og98lo-M0-Wi6-L.png',
-            'https://i.ibb.co/nncpZYB/q-Tuju-N5ywi-Vv4q-CKm-ZIysyc8b8x5-PEFZnv53-SXAG.png',
-            'https://i.ibb.co/pbggPdn/Nwd-U0-QMw-VVWs-Xy-CDH9-Tmx7-VMvwh-Xm5w-O8-YAv-EMUV.png',
-            'https://i.ibb.co/zmLzKqm/s-Xmqbk-EQrt-Uq-Vh-Azd-RGG0mf-Jq-UPTHQ0p-NEJd-Hbe6.png',
-            'https://i.ibb.co/cNgzFrL/ue-DSl-Zbl-Rg-Hw-Uqn-Cu-VC0-VT7-J9-IMt-Yc-VKkudrj-ZXr.png',
-            'https://i.ibb.co/9sMspx4/q-RXfcw9jk-Iz-Fu-K3-UF4-ZNIABpv2-PXw-YKq-Jcjz2-G3r-2.png',
-            'https://i.ibb.co/c6HvFFL/8-N4-Dc-RN4u-Ofvv-EOLKGt4a-XFl-Oj-Fi-WFj8-SOn-Ld-GKp.png'
-        ];
+        // Available placeholder images
+        $foodImages = ['food-icon1.png', 'food-icon2.png', 'food-icon3.png'];
 
         foreach ($menuData as $key => $menu) {
-            $filename = Str::random(40) . '.png'; 
+            // Use foodicon images in cycle
+            $imageIndex = $key % count($foodImages);
+            $menu['picture'] = 'menu/' . $foodImages[$imageIndex];
 
-            $imageData = file_get_contents($imageUrls[$key]); 
-            Storage::put('menu/' . $filename, $imageData); 
-
-            $menu['picture'] = 'menu/' . $filename; 
-
-            Menu::create($menu);
+            Menu::updateOrCreate(
+                ['name' => $menu['name']],
+                $menu
+            );
         }
     }
 }
-
-
-
-
-

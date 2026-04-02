@@ -22,9 +22,9 @@
                                     @foreach ($users as $user)
                                         <tr class="alert" role="alert">
                                             <td class="align-middle">
-                                                @if ($user->level->id === auth()->user()->id)
+                                                @if ($user->id === auth()->user()->id)
                                                 @else
-                                                    @if ($user->level->id === 1)
+                                                    @if ($user->level && $user->level->id === 1)
                                                     <label class="checkbox-wrap checkbox-primary opacity-0 pe-none">
                                                         <input class="form-check-input text-info mt-0">
                                                         <span class="checkmark"></span>
@@ -34,7 +34,7 @@
                                                     @else
                                                     <label class="checkbox-wrap checkbox-primary">
                                                         <input class="form-check-input text-info mt-0" type="checkbox"
-                                                            name="users[]" data-role={{ $user->level->id }}
+                                                            name="users[]" data-role="{{ $user->level_id ?? 0 }}"
                                                             value="{{ $user->id }}">
                                                         <span class="checkmark"></span>
                                                     </label>
@@ -56,7 +56,7 @@
                                             <td class="small align-middle">
                                                 {{ $user->username === auth()->user()->username ? $user->username . '(You)' : $user->username }}
                                             </td>
-                                            <td class="small align-middle level">{{ $user->level->level }}</td>
+                                            <td class="small align-middle level">{{ $user->level ? $user->level->level : '-' }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -107,7 +107,7 @@
                 alert('Please select at least one employee to delete.');
             } else if (selectedUsers[0].dataset.role === '1') {
                 event.preventDefault();
-                alert('The manager role cannot be deleted, it can only be edited.');
+                alert('The owner role cannot be deleted, it can only be edited.');
             } else {
                 var confirmation = confirm('Are you sure you want to delete ' + selectedCount +
                     ' selected employee(s)?');

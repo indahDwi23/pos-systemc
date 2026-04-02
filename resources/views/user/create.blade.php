@@ -1,8 +1,8 @@
 @extends('layouts.main')
 
 @section('container')
-    <h1 class="app-page-title mb-4">Add New Employee</h1>
-    <div class="col-12 col-md-8">
+    <h1 class="app-page-title mb-4">Tambah Karyawan kasir</h1>
+    <div class="col-12 col-md-8"> 
         <div class="app-card-body">
             <form action="/user" method="POST">
                 @csrf
@@ -55,8 +55,8 @@
                     <label for="setting-input-4" class="form-label">Role</label>
                     <select class="form-select @error('level_id') is-invalid @enderror" id="setting-input-4" name="level_id" required>
                         <option selected disabled hidden>- select role -</option>
-                        <option value="2"  @if (old('level_id') == "2") {{ 'selected' }} @endif >Cashier</option>
-                        <option value="3"  @if (old('level_id') == "3") {{ 'selected' }} @endif >Admin</option>
+                        <option value="1" @if (old('level_id') == "1") {{ 'selected' }} @endif >Owner</option>
+                        <option value="2" @if (old('level_id') == "2") {{ 'selected' }} @endif >Cashier</option>
                     </select>
                     @error('level_id')
                         <div class="invalid-feedback">

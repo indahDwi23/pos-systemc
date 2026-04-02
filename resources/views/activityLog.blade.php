@@ -10,7 +10,7 @@
             <li>
             <style>
                 .bullet-line-list li:nth-child({{$loop->iteration}})::before {
-                    background-image: url('/storage/profile/{{ $item->user->picture }}');
+                    background-image: url('/storage/profile/{{ $item->user ? $item->user->picture : 'avatars-1.png' }}');
                     width: 40px;
                     height: 40px;
                     left: -50px;
@@ -21,7 +21,7 @@
                 }
             </style>
             <div class="d-flex justify-content-between">
-                <div><span class="text-light-green">{{ $item->user->name }} </span> &nbsp {{ $item->action }} <p class="small">{{ $item->user->level->level }}</p> </div>
+                <div><span class="text-light-green">{{ $item->user ? $item->user->name : 'Deleted User' }} </span> &nbsp {{ $item->action }} <p class="small">{{ $item->user && $item->user->level ? $item->user->level->level : '-' }}</p> </div>
                 <p>{{ $item->created_at->diffForHumans() }}</p>
             </div>
             </li>

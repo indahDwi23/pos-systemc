@@ -48,7 +48,7 @@
                 <div class="row justify-content-between align-items-center">
                     <div class="col-12 mb-0">
                         <div class="item-label"><strong>Role</strong></div>
-                        <input class="w-100 mt-2 form-control border-0 ps-0 rounded-0" disabled value=" {{ $key->level->level }}" name="level_id">
+                        <input class="w-100 mt-2 form-control border-0 ps-0 rounded-0" disabled value=" {{ $key->level ? $key->level->level : '-' }}" name="level_id">
                     </div>
                 </div>
             </div>

@@ -2,15 +2,9 @@
 
 @section('container')
 
-@can('manager')
+@can('owner')
     @section('container')
-        @include('dashboard.manager')
-    @endsection
-@endcan
-
-@can('admin')
-    @section('container')
-        @include('dashboard.admin')
+        @include('dashboard.owner')
     @endsection
 @endcan
 

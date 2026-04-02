@@ -26,10 +26,10 @@
 							<img class="logo-icon me-2" src="/images/logofood.png" alt="logo">
 						</a>
 					</div>
-					<h2 class="auth-heading text-center mb-5">Login to FOODOSO</h2>
+					<h2 class="auth-heading text-center mb-5">Ayam Penyet Sultan</h2>
                     @if (session()->has('LoginError'))
                     <div class="alert alert-danger alert-dismissible fade show p-2" role="alert">
-                        Login Failed
+                        Login Gagal
                         <button type="button" class="btn-close p-2 mt-1" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                     @endif
@@ -48,14 +48,14 @@
 										<div class="form-check">
 											<input class="form-check-input" type="checkbox" value="" id="RememberPassword">
 											<label class="form-check-label" for="RememberPassword">
-											Remember me
+											Ingat saya
 											</label>
 										</div>
 									</div>
 								</div>
 							</div>
 							<div class="text-center">
-								<button type="submit" class="btn app-btn-primary w-100 theme-btn mx-auto">Log In</button>
+								<button type="submit" class="btn app-btn-primary w-100 theme-btn mx-auto">Masuk</button>
 							</div>
 						</form>
 					</div>
@@ -71,8 +71,8 @@
 			    <div class="d-flex flex-column align-content-end h-100">
 				    <div class="h-100"></div>
 				    <div class="overlay-content p-3 p-lg-4 rounded">
-					    <h5 class="mb-3 overlay-title">Motivation for today</h5>
-					    <div>Our task is not only to serve delicious food but also to provide friendly and efficient service. Focus on good service quality and success will follow.</div>
+					    <h5 class="mb-3 overlay-title">Motivasi hari ini</h5>
+					    <div>Tugas kita tidak hanya menyajikan makanan lezat tetapi juga memberikan pelayanan yang ramah dan efisien. Fokus pada kualitas pelayanan yang baik dan kesuksesan akan mengikuti.</div>
 				    </div>
 				</div>
 		    </div>

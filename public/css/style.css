@@ -96,50 +96,53 @@
 /* sidebar  */
 
 #sidebar {
-    background-color: #252525;
+    background-color: #ffffff;
+    border-right: 1px solid #e9ecef;
 }
 
 .arrow {
-    color: #6d7074;
+    color: #6c757d;
 }
 
 .nav-item {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .nav-link {
-    background-color: #252525;
+    background-color: #ffffff;
+    color: #6c757d;
 }
 
 .nav-link-text {
-    color: #6d7074;
+    color: #6c757d;
 }
 
 .nav-icon {
-    color: #6d7074;
+    color: #6c757d;
     font-size: 16px;
 }
 
 .nav-link:hover .nav-link-text {
-    color: #fff;
+    color: #15a362;
     transition: ease-in-out 0.3s;
 }
 
 .nav-link:hover .nav-icon {
-    color: #fff;
+    color: #15a362;
     transition: ease-in-out 0.3s;
 }
 
 .nav-item .nav-link.active {
-    background-color: #252525;
+    background-color: #ffffff;
+    color: #15a362;
 }
 
 .nav-item .nav-link.active .nav-icon {
-    color: #fff;
+    color: #15a362;
 }
 
 .nav-item .nav-link.active .nav-link-text {
-    color: #fff;
+    color: #15a362;
 }
 
 .nav-item .nav-link.active {
@@ -149,11 +152,11 @@
 #submenu-1,
 #submenu-2,
 #submenu-3 {
-    background-color: #252525;
+    background-color: #f8f9fa;
 }
 
 .nav-link:hover .submenu-arrow svg {
-    color: #fff;
+    color: #15a362;
 }
 
 .app-nav
@@ -161,11 +164,12 @@
     .nav-link.submenu-toggle.active
     .submenu-arrow
     svg {
-    color: #fff;
+    color: #15a362;
 }
 
 .app-branding {
-    height: 90px;
+    height: auto;
+    padding: 1.5rem 1rem;
 }
 
 .app-logo {
@@ -173,8 +177,8 @@
 }
 
 .app-branding .logo-icon {
-    width: 50px;
-    height: 50px;
+    width: 140px !important;
+    height: auto !important;
 }
 
 .app-branding .logo-icon-text {
@@ -186,18 +190,18 @@
 
 .app-branding .logo-text {
     height: 50px;
-    color: #fff;
+    color: #1a1c23;
     font-size: 16px;
 }
 
 #submenu-1 .submenu-item:hover .submenu-link,
 #submenu-2 .submenu-item:hover .submenu-link,
 #submenu-3 .submenu-item:hover .submenu-link {
-    color: #fff;
+    color: #15a362;
 }
 
 #sidepanel-close {
-    color: #fff;
+    color: #6c757d;
 }
 
 .app-sidepanel {
@@ -220,7 +224,8 @@
 }
 
 .submenu-item .submenu-link.active {
-    color: #fff;
+    color: #15a362;
+    font-weight: 500;
 }
 
 .form-select {
@@ -496,6 +501,27 @@
 }
 
 /* menu css  */
+
+.menu-image {
+    width: 100%;
+    height: 150px !important;
+    object-fit: cover !important;
+    border-radius: 10px;
+}
+
+.picture-preview {
+    width: 100%;
+    height: 250px !important;
+    object-fit: cover !important;
+    border-radius: 10px;
+}
+
+.img-preview {
+    width: 100%;
+    height: 240px !important;
+    object-fit: cover !important;
+    border-radius: 10px;
+}
 
 .menu .nav-tabs {
     border: 0;

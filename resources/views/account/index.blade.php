@@ -48,7 +48,7 @@
                     <div class="col-auto">
                         <div class="item-label"><strong>Role</strong></div>
                         <div class="item-data">
-                            {{ $user->level->level }}
+                            {{ $user->level ? $user->level->level : '-' }}
                         </div>
                     </div>
                 </div>

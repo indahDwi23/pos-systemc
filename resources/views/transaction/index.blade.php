@@ -2,7 +2,7 @@
 
 @section('container')
 <div class="col-auto">
-    <h1 class="app-page-title mb-0">Transaction</h1>
+    <h1 class="app-page-title mb-0">Transaksi</h1>
 </div>
 <div class="col-10">
     <div class="page-utilities">
@@ -12,9 +12,9 @@
                     <div class="col-auto">						    
                         <select class="form-select w-auto" name="year">
                             @if (!request('year'))
-                            <option value="0" selected disabled>Select Year</option>
-                            @else 
-                            <option value="0" disabled>Select Year</option>
+                            <option value="0" selected disabled>Pilih Tahun</option>
+                            @else
+                            <option value="0" disabled>Pilih Tahun</option>
                             @endif
                             @php
                                 $year = date('Y');
@@ -29,32 +29,32 @@
                     <div class="col-auto">
                         <select class="form-select w-auto" name="month">
                             @if (!request('month'))
-                            <option value="0" selected disabled>Select Month</option>
+                            <option value="0" selected disabled>Pilih Bulan</option>
                             @else
-                            <option value="0" disabled>Select Month</option>
+                            <option value="0" disabled>Pilih Bulan</option>
                             @endif
-                            <option value="01" {{ (request('month') == '01') ? 'selected' : ' ' }}> January</option>
-                            <option value="02" {{ (request('month') == '02') ? 'selected' : ' ' }}> Febuary</option>
-                            <option value="03" {{ (request('month') == '03') ? 'selected' : ' ' }}> March</option>
-                            <option value="04" {{ (request('month') == '04') ? 'selected' : ' ' }}> April</option>
-                            <option value="05" {{ (request('month') == '05') ? 'selected' : ' ' }}> May</option>
-                            <option value="06" {{ (request('month') == '06') ? 'selected' : ' ' }}> June</option>
-                            <option value="07" {{ (request('month') == '07') ? 'selected' : ' ' }}> July</option>
-                            <option value="08" {{ (request('month') == '08') ? 'selected' : ' ' }}> August</option>
-                            <option value="09" {{ (request('month') == '09') ? 'selected' : ' ' }}> September</option>
-                            <option value="10" {{ (request('month') == '10') ? 'selected' : ' ' }}> October</option>
-                            <option value="11" {{ (request('month') == '11') ? 'selected' : ' ' }}> November</option>
-                            <option value="12" {{ (request('month') == '12') ? 'selected' : ' ' }}> December</option>
+                            <option value="01" {{ (request('month') == '01') ? 'selected' : ' ' }}>Januari</option>
+                            <option value="02" {{ (request('month') == '02') ? 'selected' : ' ' }}>Februari</option>
+                            <option value="03" {{ (request('month') == '03') ? 'selected' : ' ' }}>Maret</option>
+                            <option value="04" {{ (request('month') == '04') ? 'selected' : ' ' }}>April</option>
+                            <option value="05" {{ (request('month') == '05') ? 'selected' : ' ' }}>Mei</option>
+                            <option value="06" {{ (request('month') == '06') ? 'selected' : ' ' }}>Juni</option>
+                            <option value="07" {{ (request('month') == '07') ? 'selected' : ' ' }}>Juli</option>
+                            <option value="08" {{ (request('month') == '08') ? 'selected' : ' ' }}>Agustus</option>
+                            <option value="09" {{ (request('month') == '09') ? 'selected' : ' ' }}>September</option>
+                            <option value="10" {{ (request('month') == '10') ? 'selected' : ' ' }}>Oktober</option>
+                            <option value="11" {{ (request('month') == '11') ? 'selected' : ' ' }}>November</option>
+                            <option value="12" {{ (request('month') == '12') ? 'selected' : ' ' }}>Desember</option>
                         </select>
                     </div>
                     <div class="col-auto">
-                        <button type="submit" class="btn app-btn-secondary">Search</button>
+                        <button type="submit" class="btn app-btn-secondary">Cari</button>
                     </div>
                 </form>
             </div>
             <div class="col-auto">
                 <a class="btn app-btn-primary" href="/report?{{ isset($_GET['month']) && isset($_GET['year']) ? 'month='.$_GET['month'].'&year='.$_GET['year'] : (isset($_GET['month']) ? 'month='.$_GET['month'] : (isset($_GET['year']) ? 'year= '.$_GET['year'] : 'data=all')) }}"
-                id="print"><i class="fa-solid fa-print me-2"></i>Print</a>
+                id="print"><i class="fa-solid fa-print me-2"></i>Cetak</a>
             </div>
         </div>
     </div>
@@ -63,9 +63,9 @@
 
 @section('section')
 <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
-    <a class="flex-sm-fill text-sm-center nav-link {{ Request::has('month') || Request::has('year') ? ' ' : 'active' }}" id="orders-all-tab" data-bs-toggle="tab" href="{{ Request::has('month') || Request::has('year') ? ' ' : '#orders-all' }}" role="tab" aria-controls="orders-all" aria-selected="{{ Request::has('month') || Request::has('year') ? 'false' : 'true' }}">All</a>
-    <a class="flex-sm-fill text-sm-center nav-link"  id="orders-paid-tab" data-bs-toggle="tab" href="{{ Request::has('month') || Request::has('year') ? ' ' : '#orders-paid' }}" role="tab" aria-controls="orders-paid" aria-selected="false">Today</a>
-    <a class="flex-sm-fill text-sm-center nav-link" id="orders-pending-tab" data-bs-toggle="tab" href="{{ Request::has('month') || Request::has('year') ? ' ' : '#orders-pending' }}" role="tab" aria-controls="orders-pending" aria-selected="false">This Month</a>
+    <a class="flex-sm-fill text-sm-center nav-link {{ Request::has('month') || Request::has('year') ? ' ' : 'active' }}" id="orders-all-tab" data-bs-toggle="tab" href="{{ Request::has('month') || Request::has('year') ? ' ' : '#orders-all' }}" role="tab" aria-controls="orders-all" aria-selected="{{ Request::has('month') || Request::has('year') ? 'false' : 'true' }}">Semua</a>
+    <a class="flex-sm-fill text-sm-center nav-link"  id="orders-paid-tab" data-bs-toggle="tab" href="{{ Request::has('month') || Request::has('year') ? ' ' : '#orders-paid' }}" role="tab" aria-controls="orders-paid" aria-selected="false">Hari Ini</a>
+    <a class="flex-sm-fill text-sm-center nav-link" id="orders-pending-tab" data-bs-toggle="tab" href="{{ Request::has('month') || Request::has('year') ? ' ' : '#orders-pending' }}" role="tab" aria-controls="orders-pending" aria-selected="false">Bulan Ini</a>
 </nav>
 
 <div class="tab-content" id="orders-table-tab-content">
@@ -77,9 +77,9 @@
                         <thead>
                             <tr>
                                 <th class="cell">No</th>
-                                <th class="cell">Product</th>
-                                <th class="cell text-center">No Table</th>
-                                <th class="cell">Date</th>
+                                <th class="cell">Pesanan</th>
+                                <th class="cell text-center">No Meja</th>
+                                <th class="cell">Tanggal</th>
                                 <th class="cell">Status</th>
                                 <th class="cell">Total</th>
                                 @can('cashier')
@@ -96,6 +96,9 @@
                                     $times_ex = explode(' ', $item->created_at)[1];
                                     $times = \Carbon\Carbon::parse($times_ex);
                                     $time = explode(' ', $times->toDayDateTimeString());
+
+                                    // Normalize table display
+                                    $mejaDisplay = ($item->order_type === 'takeaway' || strtolower($item->no_table) === 'bungkus' || strtolower($item->no_table) === 'takeaway') ? 'Bungkus' : $item->no_table;
                                 @endphp
                                 <tr>
                                     <td class="cell">{{ $loop->iteration }}</td>
@@ -106,12 +109,12 @@
                                             @endforeach
                                         </span>
                                     </td>
-                                    <td class="cell text-center">{{ $item->no_table }}</td>
+                                    <td class="cell text-center">{{ $mejaDisplay }}</td>
                                     <td class="cell"><span>{{ $date->toFormattedDateString() }}</span><span class="note">{{ $time[4].' '.$time[5] }}</span></td>
-                                    <td class="cell"><span class="badge {{ $item->status == 'paid' ? 'bg-success' : 'bg-danger'}}">{{ $item->status }}</span></td>
+                                    <td class="cell"><span class="badge {{ $item->status == 'paid' ? 'bg-success' : 'bg-danger'}}">{{ $item->status == 'paid' ? 'Lunas' : 'Belum Lunas' }}</span></td>
                                     <td class="cell">IDR. {{ number_format($item->total_transaction, 0, ',', '.') }}</td>
                                     @can('cashier')
-                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="/transaction/{{ $item->id }}">View</a></td>
+                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="/transaction/{{ $item->id }}">Lihat</a></td>
                                     @endcan
                                 </tr>
                             @endforeach
@@ -132,9 +135,9 @@
                         <thead>
                             <tr>
                                 <th class="cell">No</th>
-                                <th class="cell">Product</th>
-                                <th class="cell text-center">No Table</th>
-                                <th class="cell">Date</th>
+                                <th class="cell">Pesanan</th>
+                                <th class="cell text-center">No Meja</th>
+                                <th class="cell">Tanggal</th>
                                 <th class="cell">Status</th>
                                 <th class="cell">Total</th>
                                 @can('cashier')
@@ -151,6 +154,9 @@
                                     $times_ex = explode(' ', $item->created_at)[1];
                                     $times = \Carbon\Carbon::parse($times_ex);
                                     $time = explode(' ', $times->toDayDateTimeString());
+
+                                    // Normalize table display
+                                    $mejaDisplay = ($item->order_type === 'takeaway' || strtolower($item->no_table) === 'bungkus' || strtolower($item->no_table) === 'takeaway') ? 'Bungkus' : $item->no_table;
                                 @endphp
                                 <tr>
                                     <td class="cell">{{ $loop->iteration }}</td>
@@ -161,12 +167,12 @@
                                             @endforeach
                                         </span>
                                     </td>
-                                    <td class="cell text-center">{{ $item->no_table }}</td>
+                                    <td class="cell text-center">{{ $mejaDisplay }}</td>
                                     <td class="cell"><span>{{ $date->toFormattedDateString() }}</span><span class="note">{{ $time[4].' '.$time[5] }}</span></td>
-                                    <td class="cell"><span class="badge {{ $item->status == 'paid' ? 'bg-success' : 'bg-danger'}}">{{ $item->status }}</span></td>
+                                    <td class="cell"><span class="badge {{ $item->status == 'paid' ? 'bg-success' : 'bg-danger'}}">{{ $item->status == 'paid' ? 'Lunas' : 'Belum Lunas' }}</span></td>
                                     <td class="cell">IDR. {{ number_format($item->total_transaction, 0, ',', '.') }}</td>
                                     @can('cashier')
-                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="/transaction/{{ $item->id }}">View</a></td>
+                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="/transaction/{{ $item->id }}">Lihat</a></td>
                                     @endcan
                                 </tr>
                             @endforeach
@@ -186,9 +192,9 @@
                         <thead>
                             <tr>
                                 <th class="cell">No</th>
-                                <th class="cell">Product</th>
-                                <th class="cell text-center">No Table</th>
-                                <th class="cell">Date</th>
+                                <th class="cell">Pesanan</th>
+                                <th class="cell text-center">No Meja</th>
+                                <th class="cell">Tanggal</th>
                                 <th class="cell">Status</th>
                                 <th class="cell">Total</th>
                                 @can('cashier')
@@ -205,6 +211,9 @@
                                     $times_ex = explode(' ', $item->created_at)[1];
                                     $times = \Carbon\Carbon::parse($times_ex);
                                     $time = explode(' ', $times->toDayDateTimeString());
+
+                                    // Normalize table display
+                                    $mejaDisplay = ($item->order_type === 'takeaway' || strtolower($item->no_table) === 'bungkus' || strtolower($item->no_table) === 'takeaway') ? 'Bungkus' : $item->no_table;
                                 @endphp
                                 <tr>
                                     <td class="cell">{{ $loop->iteration }}</td>
@@ -215,12 +224,12 @@
                                             @endforeach
                                         </span>
                                     </td>
-                                    <td class="cell text-center">{{ $item->no_table }}</td>
+                                    <td class="cell text-center">{{ $mejaDisplay }}</td>
                                     <td class="cell"><span>{{ $date->toFormattedDateString() }}</span><span class="note">{{ $time[4].' '.$time[5] }}</span></td>
-                                    <td class="cell"><span class="badge {{ $item->status == 'paid' ? 'bg-success' : 'bg-danger'}}">{{ $item->status }}</span></td>
+                                    <td class="cell"><span class="badge {{ $item->status == 'paid' ? 'bg-success' : 'bg-danger'}}">{{ $item->status == 'paid' ? 'Lunas' : 'Belum Lunas' }}</span></td>
                                     <td class="cell">IDR. {{ number_format($item->total_transaction, 0, ',', '.') }}</td>
                                     @can('cashier')
-                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="/transaction/{{ $item->id }}">View</a></td>
+                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="/transaction/{{ $item->id }}">Lihat</a></td>
                                     @endcan
                                 </tr>
                             @endforeach

@@ -20,10 +20,6 @@ class TransactionController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->level_id === 3) {
-            return redirect()->back();
-        }
-
         if ($user->level_id == 1) {
             $all = Transaction::with(['transaction_details', 'transaction_details.menu'])
                                 ->where('status', 'paid')
@@ -75,14 +71,13 @@ class TransactionController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->level_id === 1 || $user->level_id === 3) {
+        if ($user->level_id === 1) {
             return redirect()->back();
         }
         
         return view('transaction.create', [
             'foods' => $menu->where('category','food')->latest()->get(),
             'drinks' => $menu->where('category', 'drink')->latest()->get(),
-            'desserts' => $menu->where('category', 'dessert')->latest()->get(),
             'tables' => Transaction::select('no_table')->where('status','unpaid')->get()
         ]);
     }
@@ -95,10 +90,24 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        $transaction = $request->validate([
-            'no_table' => 'required',
-            'total_transaction' => 'required' 
+        $validated = $request->validate([
+            'total_transaction' => 'required',
+            'order_type' => 'required|in:dine_in,takeaway'
         ]);
+
+        $transaction['total_transaction'] = $validated['total_transaction'];
+        $transaction['order_type'] = $validated['order_type'];
+
+        // Only require table if dine_in
+        if ($request->order_type === 'dine_in') {
+            $request->validate([
+                'no_table' => 'required'
+            ]);
+            $transaction['no_table'] = $request->no_table;
+        } else {
+            $transaction['no_table'] = 'Bungkus';
+        }
+
         $transaction['user_id'] = auth()->user()->id;
         $transaction['total_payment'] = 0;
         $transaction['status'] = 'unpaid';
@@ -121,7 +130,7 @@ class TransactionController extends Controller
             TransactionDetail::create($transactionDetail);
         };
 
-        return redirect('/transaction')->with('success', 'New transaction successfully created !');
+        return redirect("/transaction/{$id}")->with('success', 'Pesanan berhasil dibuat!');
     }
 
     /**
@@ -134,13 +143,15 @@ class TransactionController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->level_id === 1 || $user->level_id === 3) {
+        if ($user->level_id === 1) {
             return redirect()->back();
         }
-        
-        return view('transaction.show', [
-            'data' => $transaction->with(['transaction_details','transaction_details.menu','user'])->where('id', '=', $transaction->id)->get()
-        ]);
+
+        $data = Transaction::with(['transaction_details', 'transaction_details.menu', 'user'])
+            ->where('id', $transaction->id)
+            ->get();
+
+        return view('transaction.show', compact('data'));
     }
 
     /**
@@ -163,20 +174,22 @@ class TransactionController extends Controller
      */
     public function update(Request $request, Transaction $transaction)
     {
-        
-        $validateddata = $request->validate([
+        $request->validate([
             'total_transaction' => 'required|numeric',
-            'total_payment' => 'required|numeric|gte:total_transaction'
+            'total_payment' => 'required|numeric|gte:total_transaction',
+            'payment_method' => 'required|in:cash,qris'
         ]);
 
-        $validateddata["total_payment"] = filter_var($request->total_payment, FILTER_SANITIZE_NUMBER_INT);
-        $validateddata["status"] = 'paid';
-      
-        Transaction::where('id', $transaction->id)
-                    ->update($validateddata);
-        
-        return redirect('/transaction')->with('success', 'transaction successfully !');
-        
+        // Only update total_payment, payment_method and status, don't change total_transaction
+        $updateData = [
+            'total_payment' => filter_var($request->total_payment, FILTER_SANITIZE_NUMBER_INT),
+            'payment_method' => $request->payment_method,
+            'status' => 'paid'
+        ];
+
+        Transaction::where('id', $transaction->id)->update($updateData);
+
+        return redirect("/transaction/{$transaction->id}")->with('success', 'Pembayaran Berhasil!');
     }
 
     /**

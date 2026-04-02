@@ -1,95 +1,73 @@
-<div class="col-lg-8 mb-4 shadow rounded d-flex align-items-center bg-transparent">
-    <div class="card">
-        <div class="d-flex align-items-end row">
-            <div class="col-sm-7 ps-3">
-                <div class="card-body">
-                    <h5 class="card-title text-primary">Wellcome Back {{ auth()->user()->name }}! 🎉</h5>
-                    <p class="mb-4 text-dark">
-                        You have done <span class="fw-bold">72%</span> more sales today. Check your new badge in
-                        your profile.
-                    </p>
-                    <a href="javascript:;" class="btn btn-sm btn-primary text-white">View Badges</a>
-                </div>
+@php
+    $indonesianDate = \Carbon\Carbon::now()->locale('id')->translatedFormat('l, d F Y');
+@endphp
+
+<div class="col-lg-8 mb-4">
+    <div class="modern-welcome-banner" style="background: linear-gradient(135deg, #5cb377 0%, #15a362 100%);">
+        <div class="row align-items-center">
+            <div class="col-md-7">
+                <h2 class="mb-2">Selamat Datang, {{ auth()->user()->name }}! 👋</h2>
+                <p class="mb-0">Dashboard Kasir - {{ $indonesianDate }}</p>
             </div>
-            {{-- <div class="col-sm-5 text-center text-sm-left">
-                <div class="card-body pb-0 px-0 px-md-4">
-                    <img src="/images/dash-logo.png" height="200">
-                </div>
-            </div> --}}
-            <div id="carouselExampleFade" class="col-sm-5 text-center text-sm-left carousel slide carousel-fade" data-bs-ride="carousel">
-                <div class="carousel-inner" style="padding-left: 25%;">
-                    <div class="carousel-item active">
-                        <img src="/images/foodicon/food-icon1.png" class="d-block" height="180" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="/images/foodicon/food-icon2.png" class="d-block" height="180" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="/images/foodicon/food-icon3.png" class="d-block" height="180" alt="...">
-                    </div>
-                </div>
+            <div class="col-md-5 text-center">
+                <div style="font-size: 5rem;">💰</div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="col-lg-4 col-md-4 order-1">
-    <div class="row ps-2 d-flex justify-content-evenly">
-        <div class="col-lg-5 col-md-12 col-6 mb-4 shadow rounded">
-            <div class="card">
-                <div class="card-body">
-                    <div class="card-title d-flex align-items-start justify-content-between">
-                        <div class="avatar flex-shrink-0">
-                            <img src="images/icons/unicons/chart-success.png" width="40" alt="chart success"
-                                class="rounded" />
-                        </div>
-                    </div>
-                    <span class="fw-semibold d-block mb-1 text-dark">paid</span>
-                    <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i>{{ $total_paid[0]->total_paid }}</small>
-                </div>
+<div class="col-lg-4 order-1 order-lg-2">
+    <div class="modern-stats-grid">
+        <!-- Paid Orders Card -->
+        <div class="modern-stat-card">
+            <div class="modern-stat-icon success">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="modern-stat-label">Pesanan Dibayar</div>
+            <div class="modern-stat-value">{{ $total_paid[0]->total_paid }}</div>
+            <div class="modern-stat-change positive">
+                <i class="fas fa-check"></i>
+                <span>Selesai</span>
             </div>
         </div>
-        <div class="col-lg-5 col-md-12 col-6 mb-4 shadow rounded">
-            <div class="card">
-                <div class="card-body">
-                    <div class="card-title d-flex align-items-start justify-content-between">
-                        <div class="avatar flex-shrink-0">
-                            <img src="images/icons/unicons/wallet-info.png" width="40" alt="Credit Card"
-                                class="rounded" />
-                        </div>
-                    </div>
-                    <span class="fw-semibold d-block mb-1 text-dark">unpaid</span>
-                    <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> {{ $total_unpaid[0]->total_unpaid }}</small>
-                </div>
+
+        <!-- Unpaid Orders Card -->
+        <div class="modern-stat-card">
+            <div class="modern-stat-icon danger">
+                <i class="fas fa-clock"></i>
+            </div>
+            <div class="modern-stat-label">Pesanan Belum Dibayar</div>
+            <div class="modern-stat-value">{{ $total_unpaid[0]->total_unpaid }}</div>
+            <div class="modern-stat-change negative">
+                <i class="fas fa-hourglass-half"></i>
+                <span>Tertunda</span>
             </div>
         </div>
-        <div class="col-lg-5 col-md-12 col-6 mb-4 shadow rounded">
-            <div class="card">
-                <div class="card-body">
-                    <div class="card-title d-flex align-items-start justify-content-between">
-                        <div class="avatar flex-shrink-0">
-                            <img src="images/icons/unicons/table.png" width="40" alt="Credit Card"
-                                class="rounded" />
-                        </div>
-                    </div>
-                    <span class="fw-semibold d-block mb-1 text-dark">Tables</span>
-                    <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> {{ 20 - (int)$tables[0]->tables }}</small>
-                </div>
+
+        <!-- Available Tables Card -->
+        <div class="modern-stat-card">
+            <div class="modern-stat-icon info">
+                <i class="fas fa-chair"></i>
+            </div>
+            <div class="modern-stat-label">Meja Tersedia</div>
+            <div class="modern-stat-value">{{ 20 - (int)$tables[0]->tables }}</div>
+            <div class="modern-stat-change positive">
+                <i class="fas fa-door-open"></i>
+                <span>Kosong</span>
             </div>
         </div>
-        <div class="col-lg-5 col-md-12 col-6 mb-4 shadow rounded">
-            <div class="card">
-                <div class="card-body">
-                    <div class="card-title d-flex align-items-start justify-content-between">
-                        <div class="avatar flex-shrink-0">
-                            <img src="images/icons/unicons/wallet-info.png" width="40" alt="Credit Card"
-                                class="rounded" />
-                        </div>
-                    </div>
-                    <span class="fw-semibold d-block mb-1 text-dark">Sales</span>
-                    <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> Rp {{ number_format($total_sales[0]->total_sales,0,',','.') }}</small>
-                </div>
+
+        <!-- Sales Card - Clickable -->
+        <a href="{{ route('statistics.index') }}" class="modern-stat-card clickable-stat-card">
+            <div class="modern-stat-icon primary">
+                <i class="fas fa-chart-line"></i>
             </div>
-        </div>
+            <div class="modern-stat-label">Penjualan Hari Ini</div>
+            <div class="modern-stat-value">Rp {{ number_format($total_sales[0]->total_sales, 0, ',', '.') }}</div>
+            <div class="modern-stat-change positive">
+                <i class="fas fa-chart-bar"></i>
+                <span>Lihat Statistik</span>
+            </div>
+        </a>
     </div>
 </div>
