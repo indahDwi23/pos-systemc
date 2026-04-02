@@ -1,17 +1,30 @@
 # Use PHP 8.2 Composer image
 FROM composer:2.5 AS build
 WORKDIR /app
-# Copy semua file dulu
 COPY . /app/
-# Skip artisan scripts saat composer
 RUN composer update --no-dev --optimize-autoloader --no-interaction --no-scripts
 
 # Use PHP 8.2 Apache
 FROM php:8.2-apache
 WORKDIR /var/www/html
 
-# Install extensions
-RUN docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd
+# Install system dependencies & PHP extensions
+RUN apt-get update && apt-get install -y \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) \
+    pdo \
+    pdo_mysql \
+    mbstring \
+    exif \
+    pcntl \
+    bcmath \
+    gd \
+    && rm -rf /var/lib/apt/lists/*
 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
