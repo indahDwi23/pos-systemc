@@ -2,7 +2,8 @@
 FROM composer:2.5 AS build
 WORKDIR /app
 COPY . /app/
-RUN composer update --no-dev --optimize-autoloader --no-interaction --no-scripts
+# Install all packages including dev for local development
+RUN composer update --optimize-autoloader --no-interaction
 
 # Use PHP 8.2 Apache
 FROM php:8.2-apache
@@ -28,19 +29,26 @@ RUN apt-get update && apt-get install -y \
     gd \
     && rm -rf /var/lib/apt/lists/*
 
-# Fix Apache MPM - BEFORE any other Apache config
+# Fix Apache MPM
 RUN rm -f /etc/apache2/mods-enabled/mpm_event.load \
     && rm -f /etc/apache2/mods-available/mpm_event.load \
     && a2enmod mpm_prefork \
     && a2enmod rewrite
 
 # Copy from build stage
-COPY --from=build --chown=www-data:www-data /app /var/www/html
+COPY --from=build /app /var/www/html/
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html/storage \
-    && chmod -R 755 /var/www/html/bootstrap/cache
+    && chmod -R 755 /var/www/html \
+    && chmod -R 775 /var/www/html/storage \
+    && chmod -R 775 /var/www/html/bootstrap/cache
+
+# Configure Apache - point DocumentRoot to /public
+RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|g' /etc/apache2/sites-available/000-default.conf \
+    && sed -i 's|<Directory /var/www/html>|<Directory /var/www/html/public>|g' /etc/apache2/sites-available/000-default.conf \
+    && sed -i 's|AllowOverride None|AllowOverride All|g' /etc/apache2/sites-available/000-default.conf \
+    && echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # Expose port
 EXPOSE 8080
